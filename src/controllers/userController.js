@@ -6,6 +6,7 @@ const { Op, where } = require("sequelize");
 const sequelize = require("../../config/sequelize");
 const Validator = require("fastest-validator");
 const v = new Validator();
+const { schema } = require("../tools/schema");
 
 async function getUsers(req, res) {
   try {
@@ -28,11 +29,6 @@ async function store(req, res) {
   try {
     let { username, email, password } = req.body;
 
-    let schema = {
-      username: { type: "string", min: 5 },
-      email: { type: "string" },
-      password: { type: "string", min: 5 },
-    };
     const validate = v.validate(req.body, schema);
 
     if (validate.length) {
